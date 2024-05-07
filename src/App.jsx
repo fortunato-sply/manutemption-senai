@@ -1,28 +1,44 @@
 import { useState, useEffect } from 'react'
-import { Card } from './components/Card'
+import { Card } from './components/Card/Card'
 import produtos from './constants/produtos.json'
 import { api } from "./api/rmApi"
 import style from './App.module.css'
+import { ApiCard } from './components/ApiCard/ApiCard'
+import { Map } from './components/Map/Map'
+import { TiltModal } from './components/TiltModal/TiltModal'
+import Modal from 'react-modal'
 
 function App() {
   const [show, setShow] = useState("")
   const [data, setData] = useState([])
   const [page, setPage] = useState("")
+  const [name, setName] = useState("")
 
+  const [error, setError] = useState(false);
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   useEffect(() => {
-    api.get(`/character/?page=${page}`).then((response) => {
+    api.get(`/character/?page=${page}&name=${name}`).then((response) => {
       if(!response.data.results){
         console.log("Vazio")
       }
       setData(response.data.results)
     }).catch((error) => {
       if(error.response.status === 404){
-        console.log("Esta pagina nao contem este personagem")
+        setError(true);
       }
       console.error(error)
     })
-  }, [page])
+  }, [page, name])
 
   return (
     <>
@@ -36,10 +52,18 @@ function App() {
      {show === "prod" &&
         <>
           <h2>Showroom de produtos</h2>
-            <div>
+            <div className={style.products}>
             {produtos.map((item) => {
               return(
-                <Card name={item.name} desc={item.desc} value={item.value} image={item.image} key={item.id}/>
+                  <Card 
+                    name={item.name} 
+                    desc={item.desc} 
+                    value={item.value} 
+                    image={item.image} 
+                    key={item.id}
+                    category={item.category}
+                    status={item.status}
+                  />
               )
              })}
             </div>
@@ -47,27 +71,36 @@ function App() {
       }
      {show === "api" &&
         <>
-          <h2>Rick and Morty API</h2>
-            <div>
-               <input type="text" placeholder="1/43" value={page} onChange={(event) => setPage(event.target.value)}/>
+          <h1>Rick and Morty API</h1>
+            <div className={style.inputs}>
+               <input className={style.inputNumber} type="number" placeholder="1/43" value={page} onChange={(event) => { setPage(event.target.value); setError(false) }}/>
+               <input className={style.input} type="text" placeholder="Name" value={name} onChange={(event) => { setName(event.target.value); setError(false) }}/>
+               {error && <span className={style.error}>Esta página não contém esse personagem.</span>}
             </div>
-            <div>
+            <div className={style.products}>
             {data.map((item) => { 
              return(
-              <div key={item.id}>
-                <Card name={item.name} desc={item.species} value={item.gender} image={item.image} />
+              <div key={item.id} onClick={() => { setIsOpen(true) }}>
+                <ApiCard 
+                  name={item.name} 
+                  status={item.status} 
+                  image={item.image}
+                  species={item.species}
+                  gender={item.gender} 
+                />
                 {/* <button onClick={() => {}}>Info</button> */}
               </div>
               )
-           })}
+            })}
             </div>
+            {modalIsOpen && <TiltModal />}
        </>
       }
      {show === "map" &&
         <>
       <h2>Mapa</h2>
-          <div>
-              mapa aqui
+          <div className={style.mapContainer}>
+              <Map />
           </div>
          </>
       }

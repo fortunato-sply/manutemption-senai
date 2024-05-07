@@ -4,6 +4,8 @@
     "name": "Perfume",
     "desc": "Miguel Rousseouf",
     "value": "100.00",
+    "category": "Importado",
+    "status": true,
     "image": "https://img.irroba.com.br/fit-in/600x600/filters:fill(fff):quality(80)/volarium/catalog/produtos/volarium/perfume/perfume-feminino/perfume-feminino-ch-tradicional-importado-original.jpg"
   },
   {
@@ -11,6 +13,35 @@
     "name": "Colar",
     "desc": "Jand Karno em perolas",
     "value": "2200.00",
+    "category": "Importado",
+    "status": true,
     "image": "https://cdn.awsli.com.br/600x450/1537/1537341/produto/152389745/01e29e7fcc.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Perfume",
+    "desc": "212 VIP",
+    "value": "600.00",
+    "category": "Nacional",
+    "status": true,
+    "image": "https://m.media-amazon.com/images/I/6142UZ799aL._AC_UF1000,1000_QL80_DpWeblab_.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Colar",
+    "desc": "18K Premium",
+    "value": "9800.00",
+    "category": "Nacional",
+    "status": false,
+    "image": "https://cdn.shoppub.io/cdn-cgi/image/w=1000,h=1000,q=80,f=auto/joytojoy/media/uploads/produtos/foto/ulxsldrf/colar-maxi-elos-grossos-banhado-a-ouro-18k-02.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Relógio",
+    "desc": "ROLEX Royal",
+    "value": "57000.00",
+    "category": "Importado",
+    "status": false,
+    "image": "https://aloisi.com.br/wp-content/uploads/2022/06/compra-de-rolex-usado-1-1024x683.jpg"
   }
 ]
